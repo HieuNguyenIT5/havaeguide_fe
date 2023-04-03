@@ -62,87 +62,21 @@
                 <p id="copyright">© Bản quyền thuộc về HAVA E-GUIDE | Nguyễn Khắc Hiếu</p>
             </div>
         </div>
-        <div class="chatbot" :v-html="text">
-            <!--Theme switch-->
-            <div style="position: fixed;" :style="darkTheme && 'color: #fff'" @click="darkTheme = !darkTheme">
-                {{ darkTheme ? 'Dark' : 'Light' }} Style
-            </div>
-
-            <Chat :onSend="handleSendEvent" :chat="data" :bgColorHeader="darkTheme && '#1e1e1e'"
-                :bgColorChat="darkTheme && '#2C2D2E'" :bgColorInput="darkTheme && '#1e1e1e'"
-                :bgColorIcon="darkTheme && '#9B51E0'" :bgColorMessageChatbot="darkTheme && '#1e1e1e'"
-                :bgColorMessagePerson="darkTheme && '#9B51E0'" :bgColorMessageTimestamp="darkTheme && '#1e1e1e'"
-                :textColorInput="darkTheme && '#fff'" :textColorHeader="darkTheme && '#fff'"
-                :textColorMessageChatbot="darkTheme && '#fff'" :textColorMessageTimestamp="darkTheme && '#fff'" />
-
+        <div class="chatbot">
+            <ChatBot/>
         </div>
     </div>
     <!-- <div id="btn-top"><img src="public/images/icon-to-top.png" alt="" /></div>
     <div id="fb-root"></div> -->
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { Chat } from '@chat-ui/vue3'
-const data = ref([
-    { message: 'Chào bạn! Hava có thể giúp gì cho bạn?', type: 'chatbot', timestamp: formatAMPM(new Date()) }
-])
-const darkTheme = ref(false)
+<script>
+import ChatBot from './ChatBot.vue';
 
-function handleSendEvent(input) {
-    if (input == '') return;
-    const messagePerson = {
-        type: 'person',
-        timestamp: formatAMPM(new Date()),
-        message: input
-    }
-    data.value.push(messagePerson)
-
-    setTimeout(async () => {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: input }]
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer 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`
-            }
-        });
-        const messageChatbot = {
-            type: 'chatbot',
-            timestamp: formatAMPM(new Date()),
-            message: response.data.choices[0].message.content
-        }
-        data.value.push(messageChatbot)
-        const div = document.querySelector('.div-4');
-        div.innerHTML += response.data.choices[0].message.content
-    }, 200)
-}
-
-function formatAMPM(date) {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    return strTime;
-}
-var text = "1. Đại học Công nghệ - Đại học Quốc gia Hà Nội 2. Đại học FPT 3. Đại học Bách khoa Hà Nội 4. Học viện Công nghệ Bưu chính Viễn thông 5. Học viện Kỹ thuật Quân sự 6. Trường đại học Công nghệ thông tin Học viện Kỹ thuật Mật mã";
-text = formatOutput(text);
-data.value.push({
-    type: 'chatbot',
-    timestamp: formatAMPM(new Date()),
-    message: text
-});
-
-
-function formatOutput(text) {
-    var items = text.split(/[\d+\.]+\s+/).filter(Boolean);
-    for (let i = 0; i < items.length; i++) {
-        items[i] = i + 1 + ". " + items[i];
-    }
-    return "<p>" + items.join('<br>') + "</p>";;
-}
+export default {
+  name: 'App',
+  components: {
+    ChatBot
+  },
+};
 </script>
