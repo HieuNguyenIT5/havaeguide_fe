@@ -5,11 +5,18 @@
 #footer-wp #foot-body{ 
     padding: 50px 0px;
 }
-#footer-wp #foot-body .block{ float: left; width: 25%; padding-left: 30px;}
+#footer-wp .wp-inner{
+    display: flex;
+    flex-wrap: wrap;
+}
+/* #footer-wp #foot-body .block{ float: left; width: 25%; padding-left: 30px;} */
 #footer-wp #foot-body .block:first-child{ padding-left: 0;}
+#info-company .title{
+    text-align: center;
+    box-sizing: border-box;
+}
 #info-company .title img{
     width: 150px;
-    margin-bottom: 20px;
 }
 #info-company .desc, #newfeed .desc{
     text-align: justify;

@@ -19,20 +19,34 @@ const client = [
             
             //Module product
             {
+                path: "/nhom_nganh",
+                name: "sectors",
+                component: () => import("../pages/sector/index.vue"),
+            },
+            {
                 path: "/nhom_nganh/:sector_id",
                 name: "sector",
-                component: () => import("../pages/product/index.vue"),
+                component: () => import("../pages/school/index.vue"),
             },
             {
-                path: "/san_pham/chi_tiet_san_pham/:code",
-                name: "product-detail",
-                component: () => import("../pages/product/detail.vue")
+                path: "/truong_hoc",
+                name: "school",
+                component: () => import("../pages/school/index.vue")
             },
-
+            {
+                path: "/truong_hoc/:code",
+                name: "school_detail",
+                component: () => import("../pages/school/detail.vue")
+            },
             //Module cart
             {
-                path: "/gio_hang",
-                name: "cart",
+                path: "/dia_diem",
+                name: "areas",
+                component: () => import("../pages/cart/index.vue"),
+            },
+            {
+                path: "/dia_diem/:code",
+                name: "area",
                 component: () => import("../pages/cart/index.vue"),
             },
 

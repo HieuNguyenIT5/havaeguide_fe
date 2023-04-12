@@ -1,34 +1,35 @@
 <template>
-    <div class="chatbot_icon" @click="toggleChatbot">
-        <i class="fas fa-message"></i>
-    </div>
-    <div class="chatbot_inner" :class="{ visible: showChatContent }">
-        <div class="chat_header">
-            <div class="chat_header_icon">
-                <i class="fas fa-message"></i>
-            </div>
-            <div class="chat_header_title">Tư vấn trức tuyến</div>
-            <div class="close" @click="closeChatbot">
-                <i class="fas fa-xmark"></i>
-            </div>
+    <div class="chatbot">
+        <div class="chatbot_icon" @click="toggleChatbot">
+            <i class="fas fa-comment"></i>
         </div>
-        <div class="chat_content">
-            <div v-for="message in messages" :key="message.id" :class="message.type">
-                <div class="message">
-                    <p v-html="message.message"></p>
+        <div class="chatbot_inner" :class="{ visible: showChatContent }">
+            <div class="chat_header">
+                <div class="chat_header_icon">
+                    <i class="fas fa-comment"></i>
+                </div>
+                <div class="chat_header_info">Tư vấn trực tuyến</div>
+                <div class="close" @click="closeChatbot">
+                    <i class="fas fa-times"></i>
                 </div>
             </div>
-        </div>
-        <div class="message-input">
-            <input type="text" placeholder="Type your message here" @keyup.enter="sendMessage" v-model="newMessage" />
-            <div class="btn_send" @click="sendMessage">
-                <i class="fas fa-paper-plane"></i>
+            <div class="chat_content">
+                <div v-for="message in messages" :key="message.id" :class="message.type">
+                    <div class="message">
+                        <p v-html="message.message"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="message-input">
+                <input type="text" placeholder="Type your message here" @keyup.enter="sendMessage" v-model="newMessage" />
+                <div class="btn_send" @click="sendMessage">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
             </div>
         </div>
     </div>
 </template>
-  
-<script lang="js">
+<script>
 export default {
     name: 'ChatBot',
     data() {
@@ -38,7 +39,7 @@ export default {
                 {
                     id: 1,
                     type: 'bot',
-                    message: 'Xin chào, tôi là <b>ChatBot</b>. Bạn cần hỗ trợ gì?',
+                    message: 'Xin chào, tôi là <b>HAVA</b>. Bạn cần hỗ trợ gì?',
                 },
             ],
             newMessage: '',
@@ -48,28 +49,52 @@ export default {
         toggleChatbot() {
             this.showChatContent = !this.showChatContent;
             document.querySelector('.chatbot_icon').classList.add('clicked');
-            document.querySelector('.chatbot_inner').style.transform =
-                'translateY(-730px)';
+            document.querySelector('.chatbot_inner').style.transform = 'translateY(-730px)';
         },
         closeChatbot() {
             this.showChatContent = !this.showChatContent;
-            document.querySelector('.chatbot_inner').style.transform =
-                'translateY(730px)';
+            document.querySelector('.chatbot_inner').style.transform = 'translateY(730px)';
             document.querySelector('.chatbot_icon').classList.remove('clicked');
         },
         sendMessage() {
             if (this.newMessage.trim() !== '') {
+                var ms = this.newMessage;
                 const newMsg = {
                     id: this.messages.length + 1,
                     type: 'user',
-                    message: this.newMessage,
+                    message: ms,
                 };
                 this.messages.push(newMsg);
+                setTimeout(async () => {
+                    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+                        model: 'gpt-3.5-turbo-0301',
+                        messages: [{ role: 'user', content: ms }]
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer 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'
+                        }
+                    });
+                    // console.log(response.data);
+                    const messageChatbot = {
+                        id: this.messages.length + 1,
+                        type: 'bot',
+                        message: formatOutput(response.data.choices[0].message.content)
+                    }
+                    console.log(formatOutput(response.data.choices[0].message.content));
+                    this.messages.push(messageChatbot)
+                }, 1);
                 this.newMessage = '';
             }
         },
     },
 };
+function formatOutput(text) {
+    
+    text = text.replace("OpenAI", "Hava");
+    var items = text.split("\n");
+    return "<p>" + items.join('<br>') + "</p>";;
+}
 </script>
   
 <style>
@@ -86,6 +111,7 @@ export default {
     height: 75px;
     border-radius: 50%;
     background-color: rgb(28, 62, 255);
+    transition: 0.5s;
 }
 
 .chatbot_icon.clicked {
@@ -101,7 +127,7 @@ export default {
     width: 450px;
     height: 700px;
     transition: 0.8s;
-    background-color: #dee;
+    background-color: rgb(235, 245, 245);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
@@ -117,7 +143,8 @@ export default {
     padding: 0 10px;
     font-weight: bold;
 }
-.chat_header_icon{
+
+.chat_header_icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,11 +155,13 @@ export default {
     border-radius: 50%;
     background-color: rgb(28, 62, 255);
 }
-.chat_header_title{
+
+.chat_header_title {
     font-size: 25px;
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .close {
     font-size: 30px;
     padding: 10px;
@@ -144,8 +173,12 @@ export default {
     box-sizing: border-box;
     height: 565px;
     overflow-y: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
 }
-
+.chat_content::-webkit-scrollbar {
+  display: none;
+}
 .chat_content .bot {
     display: flex;
     justify-content: flex-start;
@@ -170,9 +203,10 @@ export default {
 .chat_content .user .message {
     max-width: 60%;
     padding: 10px;
-    background: #1ee;
+    background: rgb(28, 62, 255);
     border-radius: 15px;
     text-align: left;
+    color: #fff;
 }
 
 .message-input {
@@ -185,6 +219,7 @@ export default {
     outline: none;
     font-size: 16px;
     padding: 15px;
+    padding-right: 55px;
     box-sizing: border-box;
 }
 
@@ -201,6 +236,13 @@ export default {
 .visible .chatbot_icon {
     opacity: 0;
     pointer-events: none;
+}
+@media (max-width: 576px){
+    .chatbot_inner{
+        right: 0px;
+        bottom: -730px;
+        width: 355px;
+    }
 }
 </style>
   

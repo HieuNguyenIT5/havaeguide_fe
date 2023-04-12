@@ -1,8 +1,8 @@
 <template>
-    <div id="footer-wp">
+    <div id="footer-wp" class="container-fluid">
         <div id="foot-body" class="container">
-            <div class="wp-inner clearfix">
-                <div class="block" id="info-company">
+            <div class="wp-inner clearfix row">
+                <div class="block col-12 col-md-6 col-lg-3" id="info-company">
                     <div class="title">
                         <img src="/src/assets/images/logo.png" alt="">
                     </div>
@@ -14,8 +14,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="block menu-ft" id="info-shop">
-                    <h3 class="title">Thông tin cửa hàng</h3>
+                <div class="block menu-ft col-12 col-md-6 col-lg-3" id="info-shop">
+                    <h3 class="title">Thông tin về Hava</h3>
                     <ul class="list-item">
                         <li>
                             <p>Nguyên Xá, Minh Khai, Bắc Từ Liêm, Hà Nội</p>
@@ -28,26 +28,26 @@
                         </li>
                     </ul>
                 </div>
-                <div class="block menu-ft policy" id="info-shop">
-                    <h3 class="title">Chính sách mua hàng</h3>
+                <div class="block menu-ft policy col-12 col-md-6 col-lg-3" id="info-shop">
+                    <h3 class="title">Chính sách của chúng tôi</h3>
                     <ul class="list-item">
                         <li>
                             <a href="" title="">Quy định - chính sách</a>
                         </li>
                         <li>
-                            <a href="" title="">Chính sách bảo hành - đổi trả</a>
+                            <a href="" title="">Quy tắc cộng đồng</a>
                         </li>
                         <li>
                             <a href="" title="">Chính sách hội viện</a>
                         </li>
                         <li>
-                            <a href="" title="">Giao hàng - lắp đặt</a>
+                            <a href="" title="">Giúp đỡ</a>
                         </li>
                     </ul>
                 </div>
-                <div class="block" id="newfeed">
+                <div class="block col-12 col-md-6 col-lg-3" id="newfeed">
                     <h3 class="title">Bảng tin</h3>
-                    <p class="desc">Đăng ký với chung tôi để nhận được thông tin ưu đãi sớm nhất</p>
+                    <p class="desc">Đăng ký với chung tôi để nhận được thông tin</p>
                     <div id="form-reg">
                         <form method="POST" action="">
                             <input type="email" name="email" id="email" placeholder="Nhập email tại đây">
@@ -72,7 +72,6 @@
 
 <script>
 import ChatBot from './ChatBot.vue';
-
 export default {
   name: 'App',
   components: {

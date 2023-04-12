@@ -1,5 +1,5 @@
 <template>
-  <div id="main-content" class="home-page">
+  <div id="main-content" class="home-page .container-fluid">
     <div class="container">
       <div class="wp-inner">
         <div id="slider" class="mb-4">
@@ -13,16 +13,18 @@
             </template>
           </Carousel>
         </div>
-        <div class="section card" id="selling-product">
+        <!-- Danh các các nhóm ngành -->
+        <div class="section card" id="sector">
           <div class="tab-bar" id="tab-bar-listing" v-if="sectors">
             <p class="btn-tab-bar selected" data="1">Nhóm ngành bạn muốn học</p>
           </div>
           <div class="listing">
             <div class="listing-content row">
-              <div class="item-listing col-6 col-sm-3" v-for="item in sectors">
+              <div class="item-listing col-6 col-md-4 col-lg-3 mb-3" v-for="item in sectors">
                 <div class="item-inner">
                   <router-link :to="{ name: 'sector', params: { sector_id: item.id } }">
-                    <p class="title">{{ item.name }}</p>
+                    <img :src="baseUrl+'/public/images/'+item.image" class="img-sector" :alt="item.name"> 
+                    <p class="title-sector">{{ item.name }}</p>
                   </router-link>
                 </div>
               </div>
@@ -30,37 +32,62 @@
           </div>
           <!-- End listing -->
         </div>
-
-        <div class="list-product-by-category card" v-for="items in products">
+        <!-- Danh sách một số trường đại học nổi bật -->
+        <div class="oustanding_school card">
           <div class="section">
             <div class="tab-bar" id="tab-bar-listing">
-              <p class="btn-tab-bar selected" data="1">{{ items.cat_name }}</p>
+              <p class="btn-tab-bar selected" data="1">Các trường nổi bật</p>
             </div>
             <div class="listing">
               <div class="listing-content row">
-                <div class="item-listing col-6 col-sm-3" v-for="item in items.product">
-                  <a href="#">
+                <div class="item-listing col-6 col-md-4 col-lg-3" v-for="item in ouSchools">
+                  <router-link :to="{ name: 'school_detail', params: { code: item.school_code} }">
                     <div class="item-inner">
                       <div class="top-content">
-                        <a-image :height="300" :src="baseUrl + '/public/images/' + item.image" />
-                        <div class="btn">
+                        <div class="img">
+                          <img :src="baseUrl + '/public/images/' + item.school_image" />
+                        </div>
+                        <!-- <div class="btn">
                           <i class="fa-solid fa-basket-shopping"></i>
                           <i class="fa-solid fa-eye"></i>
                           <i class="fa-solid fa-heart"></i>
                           <i class="fa-solid fa-right-left"></i>
+                        </div> -->
+                      </div>
+                        <div class="bottom-content">
+                          <p class="title">{{ item.school_name }}</p>
+                        </div>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+            </div>
+            <!-- End listing -->
+          </div>
+        </div>
+
+        <!-- Một số địa điểm học nổi bật -->
+        <div class="area_center card">
+          <div class="section">
+            <div class="tab-bar" id="tab-bar-listing">
+              <p class="btn-tab-bar selected" data="1">Nơi bạn muốn học</p>
+            </div>
+            <div class="listing">
+              <div class="listing-content row">
+                <div class="item-listing col-6 col-md-4 col-lg-3" v-for="item in areaCenters">
+                  <router-link :to="{ name: 'area', params: { code: item.codename } }">
+                    <div class="item-inner">
+                      <div class="top-content">
+                        <div class="img">
+                          <img :src="'../../src/assets/images/' + item.image" />
                         </div>
                       </div>
-                      <router-link :to="{ name: 'product-detail', params: { code: item.product_code } }">
                         <div class="bottom-content">
                           <p class="title">{{ item.name }}</p>
-                          <div class="price-show">
-                            <p class="new-price">{{ VND.format(item.new_price) }}</p>
-                            <p class="price">{{ VND.format(item.price) }}</p>
-                          </div>
+                          <div class="description">{{ item.description }}</div>
                         </div>
-                      </router-link>
                     </div>
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -107,7 +134,8 @@ export default defineComponent({
   setup() {
     const sliders = ref([]);
     const sectors = ref([]);
-    const products = ref([]);
+    const ouSchools = ref([]);
+    const areaCenters = ref([]);
     const visible = ref(false);
     const setVisible = value => {
       visible.value = value;
@@ -117,7 +145,8 @@ export default defineComponent({
         .then(function (response) {
           sliders.value = response.data.sliders;
           sectors.value = response.data.sectors;
-          products.value = response.data.products;
+          ouSchools.value = response.data.outstanding_schools;
+          areaCenters.value = response.data.area_centers;
         })
         .catch(function (error) {
           // xử trí khi bị lỗi
@@ -128,9 +157,10 @@ export default defineComponent({
     return {
       sliders,
       sectors,
-      products,
+      ouSchools,
       baseUrl,
       visible,
+      areaCenters,
       setVisible,
       VND
     }
