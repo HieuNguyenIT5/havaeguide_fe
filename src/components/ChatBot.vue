@@ -13,10 +13,10 @@
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="chat_content">
-                <div v-for="message in messages" :key="message.id" :class="message.type">
+            <div class="chat_content" id="chat_content">
+                <div v-for="message in messages" :class="message.role">
                     <div class="message">
-                        <p v-html="message.message"></p>
+                        <p v-html="message.content"></p>
                     </div>
                 </div>
             </div>
@@ -35,65 +35,72 @@ export default {
     data() {
         return {
             showChatContent: false,
-            messages: [
-                {
-                    id: 1,
-                    type: 'bot',
-                    message: 'Xin chào, tôi là <b>HAVA</b>. Bạn cần hỗ trợ gì?',
-                },
-            ],
+            messages: [],
             newMessage: '',
         };
+    },
+    created() {
+        this.messages = JSON.parse(localStorage.getItem('conversation')) || [];
     },
     methods: {
         toggleChatbot() {
             this.showChatContent = !this.showChatContent;
             document.querySelector('.chatbot_icon').classList.add('clicked');
-            document.querySelector('.chatbot_inner').style.transform = 'translateY(-730px)';
+            document.querySelector('.chatbot_inner').style.transform =
+                'translateY(-730px)';
+            scrollBottom();
         },
         closeChatbot() {
             this.showChatContent = !this.showChatContent;
-            document.querySelector('.chatbot_inner').style.transform = 'translateY(730px)';
+            document.querySelector('.chatbot_inner').style.transform =
+                'translateY(730px)';
             document.querySelector('.chatbot_icon').classList.remove('clicked');
         },
         sendMessage() {
             if (this.newMessage.trim() !== '') {
-                var ms = this.newMessage;
                 const newMsg = {
-                    id: this.messages.length + 1,
-                    type: 'user',
-                    message: ms,
+                    role: 'user',
+                    content: this.newMessage,
                 };
                 this.messages.push(newMsg);
-                setTimeout(async () => {
-                    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-                        model: 'gpt-3.5-turbo-0301',
-                        messages: [{ role: 'user', content: ms }]
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer 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'
-                        }
-                    });
-                    // console.log(response.data);
-                    const messageChatbot = {
-                        id: this.messages.length + 1,
-                        type: 'bot',
-                        message: formatOutput(response.data.choices[0].message.content)
-                    }
-                    console.log(formatOutput(response.data.choices[0].message.content));
-                    this.messages.push(messageChatbot)
-                }, 1);
+                scrollBottom();
                 this.newMessage = '';
+                axios.post('https://api.openai.com/v1/chat/completions', {
+                    model: 'gpt-3.5-turbo',
+                    messages: this.messages.slice(this.messages.length - 5)
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer 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'
+                    }
+                })
+                    .then(response => {
+                        const messageChatbot = {
+                            role: 'system',
+                            content: response.data.choices[0].message.content.replace(/\n/g, "<br/>")
+                        };
+                        this.messages.push(messageChatbot);
+                        localStorage.setItem('conversation', JSON.stringify(this.messages));
+                        scrollBottom();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
         },
     },
 };
 function formatOutput(text) {
-    
-    text = text.replace("OpenAI", "Hava");
+
+    text = text.replace("OpenAI", "Hava dựa trên API của ChatGPT");
     var items = text.split("\n");
     return "<p>" + items.join('<br>') + "</p>";;
+}
+function scrollBottom() {
+    setTimeout(() => {
+        const chatContent = document.getElementById("chat_content");
+        chatContent.scrollTop = chatContent.scrollHeight;
+    }, 10);
 }
 </script>
   
@@ -176,16 +183,18 @@ function formatOutput(text) {
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
 }
+
 .chat_content::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
-.chat_content .bot {
+
+.chat_content .system {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 10px;
 }
 
-.chat_content .bot .message {
+.chat_content .system .message {
     max-width: 80%;
     float: left;
     padding: 15px;
@@ -233,12 +242,19 @@ function formatOutput(text) {
     cursor: pointer;
 }
 
+.scroll-bottom {
+    position: absolute;
+    bottom: 100px;
+    right: 5px
+}
+
 .visible .chatbot_icon {
     opacity: 0;
     pointer-events: none;
 }
-@media (max-width: 576px){
-    .chatbot_inner{
+
+@media (max-width: 576px) {
+    .chatbot_inner {
         right: 0px;
         bottom: -730px;
         width: 355px;

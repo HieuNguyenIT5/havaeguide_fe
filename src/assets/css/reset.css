@@ -40,6 +40,9 @@ ul{
 li{
   list-style: none;
 }
+.scroll-to-bottom {
+  scroll-behavior: smooth;
+}
 @media (min-width: 992px){
 .container, .container-lg, .container-md, .container-sm {
     width: 100% !important;

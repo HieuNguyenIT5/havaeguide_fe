@@ -15,8 +15,8 @@
         </div>
         <!-- Danh các các nhóm ngành -->
         <div class="section card" id="sector">
-          <div class="tab-bar" id="tab-bar-listing" v-if="sectors">
-            <p class="btn-tab-bar selected" data="1">Nhóm ngành bạn muốn học</p>
+          <div class="tab-bar" id="tab-bar-listing" v-if="sectors">  
+              <p class="btn-tab-bar selected" data="1">Nhóm ngành bạn muốn học</p>
           </div>
           <div class="listing">
             <div class="listing-content row">
@@ -36,7 +36,8 @@
         <div class="oustanding_school card">
           <div class="section">
             <div class="tab-bar" id="tab-bar-listing">
-              <p class="btn-tab-bar selected" data="1">Các trường nổi bật</p>
+              <a href="/truong_hoc">
+                <p class="btn-tab-bar selected" data="1">Các trường nổi bật</p></a>
             </div>
             <div class="listing">
               <div class="listing-content row">
@@ -45,7 +46,7 @@
                     <div class="item-inner">
                       <div class="top-content">
                         <div class="img">
-                          <img :src="baseUrl + '/public/images/' + item.school_image" />
+                          <img :src="baseUrl + '/public/images/' + item.school_logo" />
                         </div>
                         <!-- <div class="btn">
                           <i class="fa-solid fa-basket-shopping"></i>
@@ -70,7 +71,9 @@
         <div class="area_center card">
           <div class="section">
             <div class="tab-bar" id="tab-bar-listing">
-              <p class="btn-tab-bar selected" data="1">Nơi bạn muốn học</p>
+              <a href="/dia_diem">
+                <p class="btn-tab-bar selected" data="1">Nơi bạn muốn học</p>
+              </a>
             </div>
             <div class="listing">
               <div class="listing-content row">

@@ -64,6 +64,7 @@
         </div>
         <div class="chatbot">
             <ChatBot/>
+            <LoginPage/>
         </div>
     </div>
     <!-- <div id="btn-top"><img src="public/images/icon-to-top.png" alt="" /></div>
@@ -72,6 +73,7 @@
 
 <script>
 import ChatBot from './ChatBot.vue';
+
 export default {
   name: 'App',
   components: {

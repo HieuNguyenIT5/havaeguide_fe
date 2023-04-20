@@ -1,7 +1,9 @@
 import { createApp } from 'vue'
 import router from "./router/index.js"
+import VueCookies from 'vue-cookies'
 
 import axios from 'axios'
+window.isLogin = false;
 window.VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
@@ -31,6 +33,7 @@ import "./style.css"
 
 const app = createApp(App);
 app.use(router);
+app.use(VueCookies);
 app.use(Image);
 app.use(Card);
 app.use(Menu);

@@ -1,8 +1,9 @@
 @import "./assets/css/reset.css";
 @import "./assets/css/header.css";
 @import "./assets/css/home.css";
-@import "./assets/css/product.css";
+@import "./assets/css/school.css";
 @import "./assets/css/footer.css";
+@import "./assets/css/login.css";
 /* :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;

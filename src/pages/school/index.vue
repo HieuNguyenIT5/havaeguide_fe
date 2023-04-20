@@ -18,7 +18,7 @@
                 <div class="section card col-12 col-sm-3" id="filter-school">
                     <div class="secion-detail filter_inner">
                         <div class="filter_title">
-                            Tìm ngành học
+                            Tìm trường bạn muốn học
                         </div>
                         <div class="filter_content">
                             <form method="get" ref="filter" enctype="multipart/form-data">
@@ -39,7 +39,7 @@
                                 </select>
                                 <select name="dia_diem" class="select-box" v-on:change="filteredSchools"
                                     v-model="areaSelected">
-                                    <option value="0">Nơi bạn nuốm học</option>
+                                    <option value="0">Nơi bạn muốn học</option>
                                     <option v-for="item in areas" :value="item.code"
                                         v-bind:selected="filterSelect.dia_diem == item.code">
                                         {{ item.name }}
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Danh sách một số trường đại học nổi bật -->
+                <!-- Danh sách các trường học -->
                 <div class="school card col-12 col-sm-9">
                     <div class="section">
                         <div class="tab-bar" id="tab-bar-listing">
@@ -78,7 +78,7 @@
                                         <div class="item-inner">
                                             <div class="top-content d-flex align-items-end row">
                                                 <div class="img col-4">
-                                                    <img :src="baseUrl + '/public/images/' + item.school_image" />
+                                                    <img :src="baseUrl + '/public/images/' + item.school_logo" />
                                                 </div>
                                                 <h3 class="title mb-0 text-start col-8">{{ item.school_name }}</h3>
                                                 <div class="address col-12 text-start mt-2 font-italic"

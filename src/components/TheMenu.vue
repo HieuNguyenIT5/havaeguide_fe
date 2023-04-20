@@ -18,10 +18,10 @@
                                 <a href="/news" title="">Tin tức</a>
                             </li>
                             <li>
-                                <a href="/page/detail_blog" title="">Giới thiệu</a>
+                                <a href="/gioi_thieu" title="">Giới thiệu</a>
                             </li>
                             <li>
-                                <a href="?page=detail_blog" title="">Liên hệ</a>
+                                <a href="/lien_he" title="">Liên hệ</a>
                             </li>
                         </ul>
                     </div>

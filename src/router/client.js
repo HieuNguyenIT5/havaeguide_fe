@@ -26,7 +26,7 @@ const client = [
             {
                 path: "/nhom_nganh/:sector_id",
                 name: "sector",
-                component: () => import("../pages/school/index.vue"),
+                component: () => import("../pages/sector/index.vue"),
             },
             {
                 path: "/truong_hoc",
@@ -50,6 +50,18 @@ const client = [
                 component: () => import("../pages/cart/index.vue"),
             },
 
+
+            // Trang tĩnh
+            {
+                path: "/gioi_thieu",
+                name: "about",
+                component: () => import("../pages/page/about.vue"),
+            },
+            {
+                path: "/lien_he",
+                name: "contace",
+                component: () => import("../pages/page/contact.vue"),
+            },
         ]
     }
 ];

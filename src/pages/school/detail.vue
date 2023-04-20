@@ -1,102 +1,119 @@
 <template>
-    <div id="main-content" class="product-detail-page">
+    <div id="main-content" class="school-detail-page">
         <div class="container">
             <div class="wp-inner">
-                <div class="secion" id="breadcrumb">
-                    <div class="secion-detail">
-                        <ul class="list-item clearfix">
-                            <li>
-                                <a href="" title="">Trang chủ</a>
-                            </li>
-                            <li>>></li>
-                            <li>
-                                <a href="" title="">Trường học</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div id="breadcrumb">
+                    <ul class="list-item clearfix">
+                        <li>
+                            <a href="/trang_chu" title="">Trang chủ</a>
+                        </li>
+                        <li class="ms-1 me-1">>></li>
+                        <li>
+                            <a href="/truong_hoc" title="">Trường học</a>
+                        </li>
+                        <li class="ms-1 me-1">>></li>
+                        <li>
+                            <a :href="'/truong_hoc/' + school.school_code" title="">{{ school.school_name }}</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="main-content">
-                    <div class="section" id="detail-product-wp">
-                        <div class="section-detail clearfix row">
-                            <div class="thumb col-4">
-                                <a-image v-if="product.image" :src="baseUrl + '/public/images/' + product.image" />
+                <div id="school-info-wp" class="detail">
+                    <div class="section">
+                        <div class="section-detail clearfix">
+                            <div class="object_image">
+                                <img v-if="school.school_image" :src="baseUrl + '/public/images/' + school.school_image" />
                             </div>
-                            <div class="info col-8">
-                                <h3 class="product-name">{{ product.name }}</h3>
-                                <div class="status d-flex mb-3 justify-content-between">
-                                    <div class="status-item">
+                            <div class="info_object">
+                                <img class="object_logo" v-if="school.school_logo"
+                                    :src="baseUrl + '/public/images/' + school.school_logo" />
+                                <h1 class="object_name">{{ school.school_name }}</h1>
+                                <div class="status mb-3">
+                                    <div class="status-item mb-2">
                                         <i class="fa-regular fa-circle-check pe-1"></i>
-                                        <span class="title">Trạng thái: </span>
-                                        <span v-if="product.quantity > 0">Còn hàng</span>
-                                        <span v-else>Hết hàng</span>
+                                        <span class="title">Mã trường: </span>
+                                        <span>{{ school.school_code }}</span>
                                     </div>
                                     <div class="status-item">
-                                        <i class="fa-regular fa-circle-check pe-1"></i>
-                                        <span class="title">Mã sản phẩm: </span>
-                                        <span>{{ product.product_code }}</span>
+                                        <i class="fas fa-location-dot pe-1"></i>
+                                        <span class="title">Địa chỉ: </span>
+                                        <a>{{ school.school_address }}</a>
                                     </div>
                                     <div class="status-item">
-                                        <i class="fa-regular fa-circle-check pe-1"></i>
-                                        <span class="title">Phí vận chuyển: </span>
-                                        <span>Miễn phí</span>
+                                        <a v-if="school.school_website" :href="school.school_website"
+                                            class="school_website btn">Đến website của trường</a>
+                                        <a v-if="school.school_phone" :href="'tel:' + school.school_phone"
+                                            class="school_phone btn">Tel: {{ school.school_phone }}</a>
                                     </div>
                                 </div>
-                                <div class="desc" v-html="product.description">
-                                </div>
-                                <div class="show-price d-flex mb-3">
-                                    <p class="new_price">{{ VND.format(product.new_price) }}</p>
-                                    <p class="price">{{ VND.format(product.price) }}</p>
-                                </div>
-                                <div id="num-order-wp">
-                                    <a title="" id="minus"><i class="fa fa-minus"></i></a>
-                                    <input type="text" name="num-order" value="1" id="num-order">
-                                    <a title="" id="plus"><i class="fa fa-plus"></i></a>
-                                </div>
-                                <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart">Thêm giỏ hàng</a>
+                                <div class="description" v-html="school.school_description"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="section " id="product-detail">
+                </div>
+                <div id="school-admissions" class="detail">
+                    <div class="section">
                         <div class="section-head">
-                            <span class="section-title active">Mô tả sản phẩm</span>
-                            <span class="section-title">Thông số kỹ thuật</span>
+                            <p class="section-title" v-bind:class="{ active: selectedTab === 1 }"
+                                v-on:click="selectedTab = 1">Các ngành đào tạo({{ majors.length }})</p>
+                            <p class="section-title" v-bind:class="{ active: selectedTab === 2 }"
+                                v-on:click="selectedTab = 2">Diểm chuẩn các năm</p>
                         </div>
-                        <div class="section-detail" v-html="product.product_detail">
-                        </div>
-                    </div>
-                </div>
-                <!-- same category -->
-                <div class="section card" id="same-category">
-                    <div class="tab-bar" id="tab-bar-listing">
-                        <p class="btn-tab-bar selected" data="1">Cùng danh mục</p>
-                    </div>
-                    <div class="listing">
-                        <div class="listing-content row">
-                            <div class="item-listing col-6 col-sm-3" v-for="product in sameCategory.slice(0, 4)">
-                                <div class="item-inner">
-                                    <div class="top-content">
-                                        <a-image :height="300" :src="baseUrl + '/public/images/' + product.image" />
-                                        <div class="btn">
-                                            <i class="fa-solid fa-basket-shopping"></i>
-                                            <i class="fa-solid fa-eye"></i>
-                                            <i class="fa-solid fa-heart"></i>
-                                            <i class="fa-solid fa-right-left"></i>
-                                        </div>
-                                    </div>
-                                    <router-link :to="{ name: 'product-detail', params: { id: product.id } }">
-                                        <div class="bottom-content">
-                                            <p class="title">{{ product.name }}</p>
-                                            <div class="price-show">
-                                                <p class="new-price">{{ VND.format(product.new_price) }}</p>
-                                                <p class="price">{{ VND.format(product.price) }}</p>
-                                            </div>
-                                        </div>
-                                    </router-link>
+                        <div class="section-content">
+                            <div class="list-major" v-if="selectedTab == 1">
+                                <div class="major_search">
+                                    <input type="text" placeholder="Nhập vào tên ngành bạn muốn tìm" v-model="searchInput"
+                                        @keyup="fillterMajor">
+                                </div>
+                                <div class="list_major_inner">
+                                    <a class="major_item" v-for="item in majorFillter" href="">{{ item.major_name }}</a>
+                                </div>
+                            </div>
+                            <div class="standard_core" v-if="selectedTab == 2">
+                                <div class="standard_core_inner">
+                                    Chưa cập nhật điểm chuẩn!
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end same category -->
+                </div>
+
+                <div id="school-detail" class="detail">
+                    <div class="section">
+                        <div class="section-head">
+                            <p class="section-title active">Giới thiệu về trường {{ school.school_name }}</p>
+                        </div>
+                        <div class="section-content" v-html="school.school_detail">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment card">
+                    <div class="section">
+                        <div class="tab-bar" id="tab-bar-listing">
+                            <p class="btn-tab-bar selected">Bình luận</p>
+                        </div>
+                        <TheComment v-if="isLogin"/>
+                        <div class="no_comment" v-if="comments.length == 0">
+                            Không có bình luận nào!
+                        </div>
+                        <div class="listing" v-else>
+                            <div class="listing-content">
+                                <div class="item-listing" v-for="item in comments">
+                                    <div class="user_comment d-flex">
+                                        <div class="user_avatar me-2">
+                                            <img :src="baseUrl + '/public/images/' + item.avatar" alt="">
+                                        </div>
+                                        <p class="user_name">{{ item.user_name }}</p>
+                                        <p class="created_at">{{ item.created_at.slice(0, 19) }}</p>
+                                    </div>
+                                    <div class="content">
+                                        {{ item.content }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End listing -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,37 +122,144 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import TheComment from '../../components/Comment.vue';
 export default defineComponent({
+    components: {
+        TheComment
+    },
     setup() {
-
-        const product = ref([]);
-        const sameCategory = ref([]);
-        var catId;
+        const school = ref([]);
+        const majors = ref([]);
+        const majorFillter = ref([]);
+        const comments = ref([]);
+        const selectedTab = ref(1);
+        const searchInput = ref("");
+        const token = $cookies.isKey('token') ? $cookies.get('token') : "";
+        const config = { params: { token : token } };
+        var commentText;
         const route = useRoute();
 
         const getApi = () => {
             try {
-                axios.get(baseUrl + "/api/product/" + route.params.code)
-                    .then((response1) => {
-                        product.value = response1.data.product;
-                        catId = response1.data.product.cat_id;
+                axios.get(baseUrl + "/api/school/" + route.params.code)
+                    .then((response) => {
+                        if (response.data.code == 200) {
+                            school.value = response.data.school;
+                            majors.value = response.data.school.school_majors;
+                            majorFillter.value = majors.value.slice();
+                        }
                     });
-                axios.get(baseUrl + "/api/product/same_category/" + catId)
-                    .then((response2) => {
-                        sameCategory.value = response2.data.products;
+                axios.get(baseUrl + "/api/comment/" + route.params.code)
+                    .then((response) => {
+                        if (response.data.code == 200) {
+                            comments.value = response.data.comments;
+                        }
                     });
+                axios.get(baseUrl + '/api/user_info', config)
+                    .then(function (response) {
+                        if (response.data.status == 200) {
+                            isLogin.value = true;
+                        }
+                    })
             } catch (error) {
                 console.error(error);
             }
         };
         getApi();
         return {
-            product,
-            sameCategory,
+            school,
+            majors,
+            majorFillter,
+            searchInput,
+            commentText,
+            isLogin,
             baseUrl,
+            comments,
+            selectedTab,
             VND
         }
     },
+    methods: {
+        fillterMajor() {
+            let inputValue = this.searchInput.toLowerCase();
+            this.majorFillter = this.majors.slice();
+            if (inputValue) {
+                this.majorFillter = this.majorFillter.filter(major => major.major_name.toLowerCase().includes(inputValue)
+                );
+            }
+        },
+        comment() {
+            var token = $cookies.isKey('token') ? $cookies.get('token') : "";
+            var data = {
+                token: token,
+                content: this.commentText
+            }
+            try {
+                axios.post(baseUrl + "/api/comment/", data)
+                    .then((response) => {
+                        if (response.data.code == 200) {
+                            console.log("Bình luận thành công!");
+                        }
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
+    }
 
 });
 </script>
+<style>
+.comment .section,
+.comment .listing {
+    background-color: #f4f4f4;
+}
+
+.comment .no_comment {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 15px;
+    padding: 20px;
+    background: #fff;
+}
+
+hr {
+    color: #04AFAE;
+}
+
+.comment .listing-content {
+    background-color: #f4f4f4;
+}
+
+.comment .item-listing {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.comment .user_comment {
+    margin-top: 0;
+    border-radius: 15px;
+
+}
+
+.comment .user_comment .user_avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.comment .user_comment .user_avatar img {
+    width: 100%;
+}
+
+.comment .content {
+    margin-top: 15px;
+}
+
+.comment .user_comment .created_at {
+    margin-left: 15px;
+    color: #ccc;
+}</style>
