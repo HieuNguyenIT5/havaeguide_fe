@@ -152,30 +152,30 @@ export default defineComponent({
     text-align: justify;
 }
 /* listing */
-.item-listing{
+.sector-detail-page .item-listing{
     margin-bottom: 30px;
 }
-.item-listing .top-content {
+.sector-detail-page .item-listing .top-content {
     border-bottom: 1px solid #04AFAE;
 }
 
-.item-listing .top-content .img {
+.sector-detail-page .item-listing .top-content .img {
     height: 100px;
 }
 
-.item-listing .top-content .img img {
+.sector-detail-page .item-listing .top-content .img img {
     height: 100px;
     max-width: 100%;
 }
 
-.item-listing .top-content .title {
+.sector-detail-page .item-listing .top-content .title {
     font-weight: 400;
     text-transform: uppercase;
     font-size: 20px;
     color: #04AFAE;
 }
 
-.item-listing .top-content .address {
+.sector-detail-page .item-listing .top-content .address {
     height: 50px;
     font-style: italic;
     display: -webkit-box;
@@ -186,7 +186,7 @@ export default defineComponent({
     word-break: break-word;
 }
 
-.item-listing .bottom-content {
+.sector-detail-page .item-listing .bottom-content {
     height: 240px;
     margin-top: 20px;
     text-align: left;
@@ -198,19 +198,19 @@ export default defineComponent({
     word-break: break-word;
 }
 
-.item-listing .bottom-content p {
+.sector-detail-page .item-listing .bottom-content p {
     text-align: justify;
 }
 
-.item-inner:hover {
+.sector-detail-page .item-inner:hover {
     background: #fff !important;
 }
 
-.paginate i {
+.sector-detail-page .paginate i {
     font-size: 14px;
 }
 
-.paginate .item_inner {
+.sector-detail-page .paginate .item_inner {
     padding: 5px 10px;
     background: #04AFAE;
     color: #fff;
@@ -218,7 +218,7 @@ export default defineComponent({
     cursor: pointer;
 }
 
-.paginate .item_inner:last-child() {
+.sector-detail-page .paginate .item_inner:last-child() {
     border-left: none;
 }
 </style>

@@ -64,7 +64,6 @@
         </div>
         <div class="chatbot">
             <ChatBot/>
-            <LoginPage/>
         </div>
     </div>
     <!-- <div id="btn-top"><img src="public/images/icon-to-top.png" alt="" /></div>

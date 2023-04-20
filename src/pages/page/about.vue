@@ -84,6 +84,9 @@ export default defineComponent({
 .content li {
     list-style:decimal;   
 }
+.content li p{
+    text-indent:0px !important;
+}
 .content p, .content li{
     text-align: justify;
     text-justify: inter-word;

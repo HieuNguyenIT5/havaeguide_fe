@@ -14,7 +14,7 @@
                         <img class="avatar d-none d-sm-block" :src="baseUrl + '/public/images/' + avatar" alt="avatar">
                         <span>{{ name }}</span>
                         <div class="dropdown">
-                            <a @click="logout" >Đăng xuất</a>
+                            <a @click="logout">Đăng xuất</a>
                             <a href="thong_tin_tai_khoan">Thông tin tài khoản</a>
                         </div>
                     </a>
@@ -31,9 +31,9 @@
                     </router-link>
                 </div>
                 <div class="col-9 col-sm-6 d-flex align-items-center justify-content-center">
-                    <form method="POST" action="">
+                    <form method="GET" action="/truong_hoc">
                         <div id="search-wp">
-                            <input type="text" name="s" id="s" placeholder="Nhập tên trường bạn muốn tìm kiếm!">
+                            <input type="text" name="s" id="s" @keyup.enter="handleSubmit" placeholder="Nhập tên trường bạn muốn tìm kiếm!">
                             <button type="submit" id="sm-s">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
@@ -51,7 +51,7 @@
     </div>
 </template>
 <script>
-import { defineComponent, ref, inject} from 'vue'
+import { defineComponent, ref, inject } from 'vue'
 
 export default defineComponent({
     setup() {
@@ -59,14 +59,13 @@ export default defineComponent({
         const name = ref("");
         const avatar = ref("");
         const token = $cookies.isKey('token') ? $cookies.get('token') : "";
-        const config = { params: { token : token } };
+        const config = { headers: { token: token } };
         const getApi = () => {
             axios.get(baseUrl + '/api/user_info', config)
                 .then(function (response) {
                     if (response.data.status == 200) {
                         name.value = response.data.info.name;
                         avatar.value = response.data.info.avatar;
-                        isLogin = true;
                     }
                 })
                 .catch(function (error) {
@@ -80,11 +79,10 @@ export default defineComponent({
         const logout = () => {
             axios.get(baseUrl + '/api/logout', config)
                 .then(function (response) {
-                    if(response.data.code == 200){
+                    if (response.data.code == 200) {
                         name.value = "";
                         avatar.value = "";
                         $cookies.remove("token");
-                        isLogin = false;
                         window.location.reload();
                     }
                 })
@@ -92,10 +90,15 @@ export default defineComponent({
                     // Xử lý khi bị lỗi
                     console.log(error);
                 })
-        }
+        };
+        const handleSubmit = ()=> {
+            // Do something with the search term, e.g. redirect to search results page
+            this.$router.push(`/truong_hoc?s=${this.searchTerm}`);
+        };
         return {
             name,
             avatar,
+            handleSubmit,
             logout,
             baseUrl,
         }
@@ -108,8 +111,8 @@ export default defineComponent({
 }
 
 #header .info .avatar {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     margin-right: 6px;
 
@@ -130,7 +133,7 @@ export default defineComponent({
     position: absolute;
     top: 100%;
     background-color: #fff;
-    width: 160px;
+    width: 170px;
     border-radius: 5px;
     overflow: hidden;
 }
@@ -147,4 +150,5 @@ export default defineComponent({
 
 .btn-login {
     cursor: pointer;
-}</style>
+}
+</style>

@@ -40,9 +40,9 @@ const client = [
             },
             //Module cart
             {
-                path: "/dia_diem",
+                path: "/khu_vuc",
                 name: "areas",
-                component: () => import("../pages/cart/index.vue"),
+                component: () => import("../pages/area/index.vue"),
             },
             {
                 path: "/dia_diem/:code",

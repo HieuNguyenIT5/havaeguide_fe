@@ -71,7 +71,7 @@
         <div class="area_center card">
           <div class="section">
             <div class="tab-bar" id="tab-bar-listing">
-              <a href="/dia_diem">
+              <a href="/khu_vuc">
                 <p class="btn-tab-bar selected" data="1">Nơi bạn muốn học</p>
               </a>
             </div>

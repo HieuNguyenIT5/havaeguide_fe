@@ -87,34 +87,7 @@
                     </div>
                 </div>
 
-                <div class="comment card">
-                    <div class="section">
-                        <div class="tab-bar" id="tab-bar-listing">
-                            <p class="btn-tab-bar selected">Bình luận</p>
-                        </div>
-                        <TheComment v-if="isLogin"/>
-                        <div class="no_comment" v-if="comments.length == 0">
-                            Không có bình luận nào!
-                        </div>
-                        <div class="listing" v-else>
-                            <div class="listing-content">
-                                <div class="item-listing" v-for="item in comments">
-                                    <div class="user_comment d-flex">
-                                        <div class="user_avatar me-2">
-                                            <img :src="baseUrl + '/public/images/' + item.avatar" alt="">
-                                        </div>
-                                        <p class="user_name">{{ item.user_name }}</p>
-                                        <p class="created_at">{{ item.created_at.slice(0, 19) }}</p>
-                                    </div>
-                                    <div class="content">
-                                        {{ item.content }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End listing -->
-                    </div>
-                </div>
+                <TheComment :school_id="+school.id" />
             </div>
         </div>
     </div>
@@ -131,36 +104,23 @@ export default defineComponent({
         const school = ref([]);
         const majors = ref([]);
         const majorFillter = ref([]);
-        const comments = ref([]);
         const selectedTab = ref(1);
         const searchInput = ref("");
-        const token = $cookies.isKey('token') ? $cookies.get('token') : "";
-        const config = { params: { token : token } };
-        var commentText;
         const route = useRoute();
 
-        const getApi = () => {
+        const getApi = async () => {
             try {
-                axios.get(baseUrl + "/api/school/" + route.params.code)
-                    .then((response) => {
-                        if (response.data.code == 200) {
-                            school.value = response.data.school;
-                            majors.value = response.data.school.school_majors;
-                            majorFillter.value = majors.value.slice();
-                        }
-                    });
-                axios.get(baseUrl + "/api/comment/" + route.params.code)
-                    .then((response) => {
-                        if (response.data.code == 200) {
-                            comments.value = response.data.comments;
-                        }
-                    });
-                axios.get(baseUrl + '/api/user_info', config)
-                    .then(function (response) {
-                        if (response.data.status == 200) {
-                            isLogin.value = true;
-                        }
-                    })
+                const response = await fetch(`${baseUrl}/api/school/${route.params.code}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.code === 200) {
+                        school.value = data.school;
+                        majors.value = data.school.school_majors;
+                        majorFillter.value = majors.value.slice();
+                    }
+                } else {
+                    console.error(`HTTP error! status: ${response.status}`);
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -171,10 +131,7 @@ export default defineComponent({
             majors,
             majorFillter,
             searchInput,
-            commentText,
-            isLogin,
             baseUrl,
-            comments,
             selectedTab,
             VND
         }
@@ -187,24 +144,10 @@ export default defineComponent({
                 this.majorFillter = this.majorFillter.filter(major => major.major_name.toLowerCase().includes(inputValue)
                 );
             }
+            isLogin = !isLogin
+            console.log(isLogin);
         },
-        comment() {
-            var token = $cookies.isKey('token') ? $cookies.get('token') : "";
-            var data = {
-                token: token,
-                content: this.commentText
-            }
-            try {
-                axios.post(baseUrl + "/api/comment/", data)
-                    .then((response) => {
-                        if (response.data.code == 200) {
-                            console.log("Bình luận thành công!");
-                        }
-                    });
-            } catch (error) {
-                console.error(error);
-            }
-        },
+
 
     }
 
@@ -234,6 +177,7 @@ hr {
 
 .comment .item-listing {
     padding: 15px;
+    margin-top: 20px;
     background-color: #fff;
     border-radius: 15px;
 }
@@ -262,4 +206,5 @@ hr {
 .comment .user_comment .created_at {
     margin-left: 15px;
     color: #ccc;
-}</style>
+}
+</style>

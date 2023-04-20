@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 
@@ -156,13 +156,10 @@ export default defineComponent({
         let majorSelected = 0;
         let typeSelected = 0;
         let sortSelected = '';
-        filterUrl += filterSelect.nhom_nganh ? 'nhom_nganh=' + filterSelect.nhom_nganh : '';
-        filterUrl += filterSelect.nganh_hoc ? '&nganh_hoc=' + filterSelect.nganh_hoc : '';
-        filterUrl += filterSelect.dia_diem ? '&dia_diem=' + filterSelect.dia_diem : '';
-        filterUrl += filterSelect.trinh_do ? '&trinh_do=' + filterSelect.trinh_do : '';
-
         const getApi = () => {
-            axios.get(baseUrl + '/api/schools')
+            let s = route.query.s ?? "";
+            console.log(s);
+            axios.get(baseUrl + '/api/schools?s='+ s)
                 .then((response) => {
                     sectors.value = response.data.sectors;
                     majors.value = response.data.majors;
@@ -171,11 +168,13 @@ export default defineComponent({
                     schools.value = response.data.schools;
                     schoolFilter.value = schools.value.slice();
                     numPage.value = Math.ceil(schoolFilter.value.length / 10);
+
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         };
+        console.log();
         getApi();
         schoolFilter.value = schoolFilter.value.slice(0, 10);
         return {

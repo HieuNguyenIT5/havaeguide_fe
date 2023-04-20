@@ -71,7 +71,7 @@ export default {
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer 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'
+                        'Authorization': 'Bearer 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'
                     }
                 })
                     .then(response => {
