@@ -38,19 +38,29 @@ const client = [
                 name: "school_detail",
                 component: () => import("../pages/school/detail.vue")
             },
-            //Module cart
+            //Module area
             {
                 path: "/khu_vuc",
                 name: "areas",
                 component: () => import("../pages/area/index.vue"),
             },
             {
-                path: "/dia_diem/:code",
+                path: "/khu_vuc/:codename",
                 name: "area",
-                component: () => import("../pages/cart/index.vue"),
+                component: () => import("../pages/area/detail.vue"),
             },
 
-
+            //Module post
+            {
+                path: "/tin_tuc",
+                name: "posts",
+                component: () => import("../pages/post/index.vue"),
+            },
+            {
+                path: "/tin_tuc/:slug",
+                name: "post",
+                component: () => import("../pages/post/detail.vue"),
+            },
             // Trang tĩnh
             {
                 path: "/gioi_thieu",
@@ -61,6 +71,31 @@ const client = [
                 path: "/lien_he",
                 name: "contace",
                 component: () => import("../pages/page/contact.vue"),
+            },
+
+            //Question
+            {
+                path: "/cau_hoi",
+                name: "questions",
+                component: () => import("../pages/question/index.vue"),
+            },
+            {
+                path: "/cau_hoi/:id",
+                name: "question",
+                component: () => import("../pages/question/detail.vue"),
+            },
+
+            //Nhúng baichat
+            {
+                path: "/chatbot-ai",
+                name: "chatbot",
+                component: () => import("../pages/chatbot/index.vue"),
+            },
+            //Thông tin tài khoản
+            {
+                path: "/thong_tin_tai_khoan",
+                name: "userInfo",
+                component: () => import("../pages/user/userInfo.vue"),
             },
         ]
     }

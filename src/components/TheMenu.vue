@@ -12,10 +12,13 @@
                                 <a href="/truong_hoc" title="">Trường học</a>
                             </li>
                             <li>
-                                <a href="/blog" title="">Diễn đàn</a>
+                                <a href="/cau_hoi" title="">Hỏi đáp</a>
                             </li>
                             <li>
-                                <a href="/news" title="">Tin tức</a>
+                                <a href="/tin_tuc" title="">Tin tức</a>
+                            </li>
+                            <li>
+                                <a href="/chatbot-ai" title="">Bai chat</a>
                             </li>
                             <li>
                                 <a href="/gioi_thieu" title="">Giới thiệu</a>
@@ -31,6 +34,12 @@
     </div>
 </template>
 <style>
+#menu{
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+    background-color: #fff;
+}
 #menu #main-menu {
     display: flex;
     margin: 0;

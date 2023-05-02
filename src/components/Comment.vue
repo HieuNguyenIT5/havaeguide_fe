@@ -4,8 +4,9 @@
             <div class="tab-bar" id="tab-bar-listing">
                 <p class="btn-tab-bar selected">Bình luận</p>
             </div>
-            <div class="user_comment" v-if="isLogin">
-                <textarea name="comment" id="comment-text" rows="5" v-model="textComment"></textarea>
+            <div class="user_comment">
+                <textarea name="comment" id="comment-text" rows="5" :readonly="isLogin ? false : true" v-model="textComment"
+                    :placeholder="!isLogin ? 'Vui lòng đăng nhập để bình luận!' + isLogin : ''"></textarea>
                 <button class="btn btn-success" @click="addComment">Bình luận</button>
                 <span>{{ error }}</span>
             </div>
@@ -17,7 +18,7 @@
                 <div class="listing-content">
                     <div class="item-listing" v-for="item in comments">
                         <div class="user_comment d-flex">
-                            <div class="user_avatar me-2">
+                            <div v-if="item.avatar != null" class="user_avatar me-2">
                                 <img :src="baseUrl + '/public/images/' + item.avatar" alt="">
                             </div>
                             <p class="user_name">{{ item.user_name }}</p>
@@ -61,24 +62,20 @@ export default defineComponent({
             avatar: "",
             user_name: "",
             content: "",
-            created_at:"Vừa xong"
+            created_at: "Vừa xong"
         });
-        const getApi = () => {
+        const getApi = async () => {
             try {
-                axios.get(baseUrl + "/api/comment/" + route.params.code)
-                    .then((response) => {
-                        if (response.data.code == 200) {
-                            comments.value = response.data.comments;
-                        }
-                    });
-                axios.get(baseUrl + '/api/user_info', config)
-                    .then(function (response) {
-                        if (response.data.status == 200) {
-                            comment.value.user_name = response.data.info.name;
-                            comment.value.avatar = response.data.info.avatar;
-                            isLogin.value = true;
-                        }
-                    })
+                var response = await axios.get(baseUrl + "/api/comment/" + route.params.code)
+                if (response.data.code == 200) {
+                    comments.value = response.data.comments;
+                }
+                var response = await axios.get(baseUrl + '/api/user_info', config)
+                if (response.data.status == 200) {
+                    comment.value.user_name = response.data.info.name;
+                    comment.value.avatar = response.data.info.avatar;
+                    isLogin.value = true;
+                }
                 //console.log(token);
             } catch (error) {
                 console.error(error);

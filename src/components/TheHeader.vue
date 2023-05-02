@@ -11,7 +11,7 @@
                     <a href="/dang_nhap" v-if="name == ''">Đăng nhập</a>
                     <a href="/dang_ky" v-if="name == ''" class="ms-2">Đăng ký</a>
                     <a class="info d-flex align-items-center" v-if="name != ''">
-                        <img class="avatar d-none d-sm-block" :src="baseUrl + '/public/images/' + avatar" alt="avatar">
+                        <img v-if="avatar != null" class="avatar d-none d-sm-block" :src="baseUrl + '/public/images/' + avatar" alt="avatar">
                         <span>{{ name }}</span>
                         <div class="dropdown">
                             <a @click="logout">Đăng xuất</a>

@@ -101,4 +101,8 @@ export default defineComponent({
     padding: 20px;
     border-radius: 15px;
 }
+.detail-blog-page .content_inner{
+    position: sticky;
+    top: 50px;
+}
 </style>

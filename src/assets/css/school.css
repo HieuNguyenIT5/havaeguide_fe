@@ -4,6 +4,7 @@
 }
 #main-content #breadcrumb .list-item{
     display: flex;
+    padding: 0;
 }
 .detail{
     border-radius: 15px;

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="wp-inner">
         <div id="slider" class="mb-4">
-          <Carousel :autoplay="2000" :wrap-around="true">
+          <Carousel :autoplay="false" :wrap-around="true">
             <Slide v-for="slide in sliders" style="height: auto;">
               <div class="carousel__item"><img class="w-100" :src="baseUrl + '/public/images/' + slide.url" alt="">
               </div>
@@ -15,15 +15,15 @@
         </div>
         <!-- Danh các các nhóm ngành -->
         <div class="section card" id="sector">
-          <div class="tab-bar" id="tab-bar-listing" v-if="sectors">  
-              <p class="btn-tab-bar selected" data="1">Nhóm ngành bạn muốn học</p>
+          <div class="tab-bar" id="tab-bar-listing" v-if="sectors">
+            <p class="btn-tab-bar selected" data="1">Nhóm ngành bạn muốn học</p>
           </div>
           <div class="listing">
             <div class="listing-content row">
               <div class="item-listing col-6 col-md-4 col-lg-3 mb-3" v-for="item in sectors">
                 <div class="item-inner">
                   <router-link :to="{ name: 'sector', params: { sector_id: item.id } }">
-                    <img :src="baseUrl+'/public/images/'+item.image" class="img-sector" :alt="item.name"> 
+                    <img :src="baseUrl + '/public/images/' + item.image" class="img-sector" :alt="item.name">
                     <p class="title-sector">{{ item.name }}</p>
                   </router-link>
                 </div>
@@ -37,12 +37,13 @@
           <div class="section">
             <div class="tab-bar" id="tab-bar-listing">
               <a href="/truong_hoc">
-                <p class="btn-tab-bar selected" data="1">Các trường nổi bật</p></a>
+                <p class="btn-tab-bar selected" data="1">Các trường nổi bật</p>
+              </a>
             </div>
             <div class="listing">
               <div class="listing-content row">
                 <div class="item-listing col-6 col-md-4 col-lg-3" v-for="item in ouSchools">
-                  <router-link :to="{ name: 'school_detail', params: { code: item.school_code} }">
+                  <router-link :to="{ name: 'school_detail', params: { code: item.school_code } }">
                     <div class="item-inner">
                       <div class="top-content">
                         <div class="img">
@@ -55,9 +56,9 @@
                           <i class="fa-solid fa-right-left"></i>
                         </div> -->
                       </div>
-                        <div class="bottom-content">
-                          <p class="title">{{ item.school_name }}</p>
-                        </div>
+                      <div class="bottom-content">
+                        <p class="title">{{ item.school_name }}</p>
+                      </div>
                     </div>
                   </router-link>
                 </div>
@@ -78,17 +79,17 @@
             <div class="listing">
               <div class="listing-content row">
                 <div class="item-listing col-6 col-md-4 col-lg-3" v-for="item in areaCenters">
-                  <router-link :to="{ name: 'area', params: { code: item.codename } }">
+                  <router-link :to="{ name: 'area', params: { codename: item.codename } }">
                     <div class="item-inner">
                       <div class="top-content">
                         <div class="img">
                           <img :src="'../../src/assets/images/' + item.image" />
                         </div>
                       </div>
-                        <div class="bottom-content">
-                          <p class="title">{{ item.name }}</p>
-                          <div class="description">{{ item.description }}</div>
-                        </div>
+                      <div class="bottom-content">
+                        <p class="title">{{ item.name }}</p>
+                        <div class="description">{{ item.description }}</div>
+                      </div>
                     </div>
                   </router-link>
                 </div>
@@ -143,18 +144,22 @@ export default defineComponent({
     const setVisible = value => {
       visible.value = value;
     };
-    const getApi = () => {
-      axios.get(baseUrl + '/api/home')
-        .then(function (response) {
+    const getApi = async () => {
+      try {
+        const response = await axios.get(baseUrl + '/api/home')
+        if (response.data.status == 200) {
           sliders.value = response.data.sliders;
           sectors.value = response.data.sectors;
           ouSchools.value = response.data.outstanding_schools;
           areaCenters.value = response.data.area_centers;
-        })
-        .catch(function (error) {
-          // xử trí khi bị lỗi
-          console.log(error);
-        })
+        } else {
+          console.error(`HTTP error! status: ${response.status}`);
+        }
+      }
+      catch (error) {
+        // xử trí khi bị lỗi
+        console.log(error);
+      }
     };
     getApi();
     return {

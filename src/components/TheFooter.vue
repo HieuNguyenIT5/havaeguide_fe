@@ -58,12 +58,11 @@
             </div>
         </div>
         <div id="foot-bot">
-            <div class="wp-inner">
-                <p id="copyright">© Bản quyền thuộc về HAVA E-GUIDE | Nguyễn Khắc Hiếu</p>
-            </div>
+            <p id="copyright">© Bản quyền thuộc về HAVA E-GUIDE | Nguyễn Khắc Hiếu</p>
         </div>
         <div class="chatbot">
             <ChatBot/>
+            <BackToTop/>
         </div>
     </div>
     <!-- <div id="btn-top"><img src="public/images/icon-to-top.png" alt="" /></div>
@@ -72,11 +71,18 @@
 
 <script>
 import ChatBot from './ChatBot.vue';
+import BackToTop from './BackToTop.vue';
 
 export default {
   name: 'App',
   components: {
-    ChatBot
+    ChatBot,
+    BackToTop
   },
 };
 </script>
+<style>
+#copyright{
+    text-align: center;
+}
+</style>

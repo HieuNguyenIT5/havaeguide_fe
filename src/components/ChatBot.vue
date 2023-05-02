@@ -71,13 +71,13 @@ export default {
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer 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'
+                        'Authorization': 'Bearer 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'
                     }
                 })
                     .then(response => {
                         const messageChatbot = {
                             role: 'system',
-                            content: response.data.choices[0].message.content.replace(/\n/g, "<br/>")
+                            content: formatOutput(response.data.choices[0].message.content)
                         };
                         this.messages.push(messageChatbot);
                         localStorage.setItem('conversation', JSON.stringify(this.messages));
@@ -129,6 +129,7 @@ function scrollBottom() {
 
 .chatbot_inner {
     position: fixed;
+    z-index: 1000;
     bottom: -700px;
     right: 30px;
     width: 450px;

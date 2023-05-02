@@ -101,4 +101,8 @@ export default defineComponent({
 .content-left iframe{
     width: 100%;
 }
+.detail-blog-page .content_inner{
+    position: sticky;
+    top: 50px;
+}
 </style>

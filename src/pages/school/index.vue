@@ -304,8 +304,9 @@ export default defineComponent({
     border-radius: 5px;
     font-size: 18px;
 }
-
 .school-page #filter-school .filter_inner {
+    position: sticky;
+    top: 20px;
     background-color: #fff;
     height: auto;
     padding: 5px;
