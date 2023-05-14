@@ -1,7 +1,7 @@
 <template>
     <div id="main-content" class="school-page">
         <div class="container">
-            <div class="section" id="breadcrumb">
+            <div class="section pt-3" id="breadcrumb">
                 <div class="secion-detail">
                     <ul class="list-item clearfix">
                         <li>
@@ -273,25 +273,25 @@ export default defineComponent({
 <style>
 /* Thay đổi background */
 .school-page {
-    background-color: #fafafa;
+    background-color: var(--bg-page);
     box-sizing: border-box;
 }
 
 .school-page .section {
-    background-color: #fafafa;
+    background-color: var(--bg-page);
 }
 
 .school-page .item-listing {
-    background-color: #fafafa;
+    background-color: var(--bg-page);
     padding: 15px;
 }
 
 .school-page .school {
-    background: #fafafa;
+    background: var(--bg-page);
 }
 
 .school-page .listing-content {
-    background: #fafafa;
+    background: var(--bg-page);
 }
 
 .school-page .listing {
@@ -306,7 +306,7 @@ export default defineComponent({
 }
 .school-page #filter-school .filter_inner {
     position: sticky;
-    top: 20px;
+    top: 60px;
     background-color: #fff;
     height: auto;
     padding: 5px;

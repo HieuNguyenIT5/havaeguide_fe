@@ -1,5 +1,5 @@
 <template>
-    <div id="menu" class="container-fluid shadow mb-3">
+    <div id="menu" class="container-fluid shadow">
         <div class="container">
             <div class="d-flex align-items-center menu-inner">
                 <div class="fs-6">
@@ -35,9 +35,9 @@
 </template>
 <style>
 #menu{
-    /* position: sticky;
+    position: sticky;
     top: -1px;
-    z-index: 1; */
+    z-index: 1;
     background-color: #fff;
 }
 #menu #main-menu {
@@ -60,7 +60,9 @@
 #menu #main-menu li:last-child a {
     border-right: none;
 }
-
+#menu #main-menu .shadow{
+    box-shadow: 0 .5rem 1rem rgba(var(--grey2-color),.15)!important;
+}
 #menu .menu-inner {
     position: relative;
 }

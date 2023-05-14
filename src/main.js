@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import router from "./router/index.js"
 import VueCookies from 'vue-cookies'
+import Toast from 'vue-toastification';
+
 
 import axios from 'axios'
 window.VND = new Intl.NumberFormat('vi-VN', {
@@ -16,8 +18,7 @@ import {
     Drawer,
     Button,
     Dropdown,
-    Card,
-    message
+    Card
 }from 'ant-design-vue'
 
 import App from './App.vue'
@@ -26,6 +27,7 @@ import App from './App.vue'
 import "ant-design-vue/dist/antd.min.css"
 import "./static/fontawesome/css/all.min.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'vue-toastification/dist/index.css';
 
 import "./style.css"
 
@@ -33,6 +35,7 @@ import "./style.css"
 const app = createApp(App);
 app.use(router);
 app.use(VueCookies);
+app.use(Toast);
 app.use(Image);
 app.use(Card);
 app.use(Menu);

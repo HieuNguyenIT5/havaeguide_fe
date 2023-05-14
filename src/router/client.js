@@ -80,11 +80,25 @@ const client = [
                 component: () => import("../pages/question/index.vue"),
             },
             {
+                path: "/chinh_sua_cau_hoi/:id",
+                name: "edit_question",
+                component: () => import("../pages/question/edit.vue"),
+            },
+            {
                 path: "/cau_hoi/:id",
-                name: "question",
+                name: "question_detail",
                 component: () => import("../pages/question/detail.vue"),
             },
-
+            {
+                path: "/dat_cau_hoi",
+                name: "ask",
+                component: () => import("../pages/question/create.vue"),
+            },
+            {
+                path: "/quan_ly_cau_hoi",
+                name: "question",
+                component: () => import("../pages/question/myquestion.vue"),
+            },
             //Nhúng baichat
             {
                 path: "/chatbot-ai",

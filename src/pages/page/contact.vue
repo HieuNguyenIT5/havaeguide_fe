@@ -8,7 +8,7 @@
                             <li>
                                 <a href="/trang_chu" title="">Trang chủ</a>
                             </li>
-                            <li>>></li>
+                            <li class="me-1 ms-1">>></li>
                             <li>
                                 <a href="" title="">{{ page.name }}</a>
                             </li>

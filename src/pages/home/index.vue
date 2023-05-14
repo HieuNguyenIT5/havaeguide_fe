@@ -83,7 +83,7 @@
                     <div class="item-inner">
                       <div class="top-content">
                         <div class="img">
-                          <img :src="'../../src/assets/images/' + item.image" />
+                          <img :src="'src/assets/images/' + item.image" />
                         </div>
                       </div>
                       <div class="bottom-content">

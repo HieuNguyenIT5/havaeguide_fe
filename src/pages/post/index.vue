@@ -1,7 +1,7 @@
 <template>
     <div id="main-content" class="post-detail container-fluid">
         <div class="container">
-            <div id="breadcrumb">
+            <div id="breadcrumb" class="pt-3">
                 <ul class="list-item clearfix">
                     <li>
                         <a href="/trang_chu" title="">Trang chủ</a>
@@ -98,7 +98,7 @@ export default defineComponent({
 </script>
 <style>
 .post-detail {
-    background-color: #fafafa !important;
+    background-color: var(--bg-page) !important;
     box-sizing: border-box;
 }
 
@@ -107,7 +107,7 @@ export default defineComponent({
     margin-bottom: 30px;
 }
 .post-detail .item-inner:hover {
-    background: #fff !important;
+    background: var(--white-color) !important;
 }
 
 .post-detail .paginate i {
@@ -115,9 +115,9 @@ export default defineComponent({
 }
 
 .post-detail .paginate .item_inner {
-    background: #04AFAE;
-    color: #fff;
-    border-left: 1px solid #fff;
+    background: var(--main-color);
+    color: var(--white-color);
+    border-left: 1px solid var(--white-color);
     cursor: pointer;
 }
 
@@ -157,5 +157,5 @@ export default defineComponent({
 }
 
 .post-detail .sub-info {
-    color: #aaa;
+    color: var(--grey2-color);
 }</style>

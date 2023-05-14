@@ -2,7 +2,7 @@
     <div id="main-content" class="school-detail-page">
         <div class="container">
             <div class="wp-inner">
-                <div id="breadcrumb">
+                <div id="breadcrumb" class="pt-3">
                     <ul class="list-item clearfix">
                         <li>
                             <a href="/trang_chu" title="">Trang chủ</a>
@@ -156,7 +156,7 @@ export default defineComponent({
 <style>
 .comment .section,
 .comment .listing {
-    background-color: #f4f4f4;
+    background-color: var(--bg-page);
 }
 
 .comment .no_comment {
@@ -168,17 +168,17 @@ export default defineComponent({
 }
 
 hr {
-    color: #04AFAE;
+    color: var(--main-color);
 }
 
 .comment .listing-content {
-    background-color: #f4f4f4;
+    background-color: var(--bg-page);
 }
 
 .comment .item-listing {
     padding: 15px;
     margin-top: 20px;
-    background-color: #fff;
+    background-color: var(--white-color);
     border-radius: 15px;
 }
 
@@ -205,6 +205,6 @@ hr {
 
 .comment .user_comment .created_at {
     margin-left: 15px;
-    color: #ccc;
+    color: var(--grey-color);
 }
 </style>

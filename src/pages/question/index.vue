@@ -1,7 +1,7 @@
 <template>
     <div id="main-content" class="question-page top-page container-fluid">
         <div class="container">
-            <div id="breadcrumb">
+            <div id="breadcrumb" class="pt-3">
                 <ul class="list-item clearfix">
                     <li>
                         <a href="/trang_chu" title="">Trang chủ</a>
@@ -11,6 +11,9 @@
                         <a href="/cau_hoi" title="">Hỏi đáp</a>
                     </li>
                 </ul>
+            </div>
+            <div class="head_question mt-3">
+                <a href="/dat_cau_hoi" class="btn btn-success me-3">Đặt câu hỏi</a>
             </div>
             <div class="main-content-question row mt-4">
                 <div class="content-left col-9">
@@ -94,7 +97,7 @@ export default defineComponent({
 </script>
 <style>
 .question-page {
-    background-color: #fafafa !important;
+    background-color: var(--bg-page) !important;
     box-sizing: border-box;
 }
 
@@ -111,7 +114,7 @@ export default defineComponent({
     border-bottom: none;
 }
 .question-page .item-inner:hover {
-    background: #fff !important;
+    background: var(--white-color) !important;
 }
 
 .question-page .paginate i {
@@ -121,9 +124,9 @@ export default defineComponent({
     min-height: 500px;
 }
 .question-page .paginate .item_inner {
-    background: #04AFAE;
-    color: #fff;
-    border-left: 1px solid #fff;
+    background: var(--main-color);
+    color: var(--white-color);
+    border-left: 1px solid var(--white-color);
     cursor: pointer;
 }
 
@@ -161,7 +164,7 @@ export default defineComponent({
 }
 
 .question-page .sub-info {
-    color: #aaa;
+    color: var(--grey-color);
 }
 .top-page .content_inner{
     position: sticky;

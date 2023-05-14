@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid" id="header" style="background-color: #0499AA; color: #fff;">
+    <div class="container-fluid" id="header" style="background-color: var(--top-header); color: #fff;">
         <div class="container">
             <div class="row text-white text-while p-2" id="head-body">
                 <div class="col-6 d-flex justify-content-start">
@@ -16,6 +16,7 @@
                         <div class="dropdown">
                             <a @click="logout">Đăng xuất</a>
                             <a href="thong_tin_tai_khoan">Thông tin tài khoản</a>
+                            <a href="/quan_ly_cau_hoi">Quản lý câu hỏi</a>
                         </div>
                     </a>
                 </div>

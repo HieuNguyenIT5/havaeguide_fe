@@ -22,8 +22,8 @@
         <div class="in">
           <label for="password">Nhập mật khẩu</label>
           <div>
-            <input name="password" v-model="datalogin.password" type="password" placeholder="Tối thiểu 8 ký tự" required /><img
-              v-if="datalogin.password.length >= 8" src="../assets/images/ok.png" alt="">
+            <input name="password" v-model="datalogin.password" type="password" placeholder="Tối thiểu 8 ký tự"
+              required /><img v-if="datalogin.password.length >= 8" src="../assets/images/ok.png" alt="">
           </div>
         </div>
 
@@ -42,17 +42,18 @@
           <a href="">Quên mật khẩu?</a>
 
         </div>
-
+        <div class="error alert alert-danger " v-if="error != ''">
+          {{ error }}
+        </div>
 
         <button class="log" @click="login">
           Đăng nhập
         </button>
-        {{ error }}
+
         <span>Bạn chưa có tài khoản? <a href="/dang_ky">Đăng ký</a> </span>
       </div>
     </div>
   </div>
-  
 </template>
   
   
@@ -75,24 +76,22 @@ export default {
       return this.emailRegex.test(email);
     },
     async login() {
-        await axios.post(baseUrl + '/api/login',this.datalogin)
-                .then((response) => {
-                    if(response.data.code == 200){
-                      this.$cookies.set('token', response.data.data.token);
-                      router.push('/');
-                    }else{
-                      error = "Đăng nhập thất bại. Tên đăng nhập hoặc tài khoản không tồn tại!";
-                    }              
-                })
-                .catch((error) => {
-                    
-                });
+      try{
+        var response = await axios.post(baseUrl + '/api/login', this.datalogin);
+            
+            if (response.data.code == 200) {
+              this.$cookies.set('token', response.data.data.token);
+              router.push('/');
+            }
+      }catch(e){
+        this.error = e.response.data.error;
+      }
     }
   }
 };
 </script>
 <style>
-#login{
+#login {
   background: linear-gradient(180deg, #04AFAE, #03a3a3);
   width: 100vw;
   height: 100vh;

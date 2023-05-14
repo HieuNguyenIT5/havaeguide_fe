@@ -2,7 +2,7 @@
     <div id="main-content-wp" class="clearfix container-fluid detail-blog-post">
         <div class="container">
             <div class="wp-inner">
-                <div class="section" id="breadcrumb">
+                <div class="section pt-3" id="breadcrumb">
                     <div class="secion-detail">
                         <ul class="list-item d-flex clearfix">
                             <li class="me-1">
@@ -10,11 +10,11 @@
                             </li>
                             <li class="me-1">>></li>
                             <li class="me-1">
-                                <a href="" title="">tin tức</a>
+                                <a href="/tin_tuc" title="">Tin tức</a>
                             </li>
                             <li class="me-1">>></li>
                             <li class="me-1">
-                                <a href="" title="">{{ post.title }}</a>
+                                <a :href="'/tin_tuc/'+ post.slug" title="">{{ post.title }}</a>
                             </li>
                         </ul>
                     </div>
@@ -116,11 +116,11 @@ export default defineComponent({
 }
 
 #app {
-    background-color: #f8f8f8;
+    background-color: var(--bg-page);
 }
 
 .detail-blog-post .content_inner {
-    background-color: #fff;
+    background-color: var(--white-color);
     padding: 20px;
     border-radius: 15px;
 }
@@ -149,6 +149,9 @@ table {
 
 .detail-blog-post .section-head {
     margin-bottom: 40px;
+}
+.sub-info{
+    color: var(--grey2-color);
 }
 .content_inner{
     position: sticky;
