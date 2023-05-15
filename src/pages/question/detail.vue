@@ -61,6 +61,9 @@
                                 <div class="list-answer mt-3" v-if="question.answers != null">
                                     <div class="item-answer" v-for="item in question.answers">
                                         <div class="answer-top">
+                                            <span v-if="item.avatar != null" class="user_avatar me-2">
+                                                <img :src="baseUrl + '/public/images/' + item.avatar" alt="">
+                                            </span>
                                             <span>{{ item.user_name }}</span>
                                             <span class="ms-3">{{ formatTime(item.created_at) }}</span>
                                         </div>
@@ -94,7 +97,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 const toast = useToast();
-
+const baseUrl = window.baseUrl;
 const question = ref({});
 const token = $cookies.isKey('token') ? $cookies.get('token') : "";
 const config = {
@@ -148,15 +151,17 @@ async function answerQuestion() {
                     message: answer.value.message,
                     created_at: "Vừa xong"
                 }
-                
+
                 question.value.answers.unshift(answerNew);
-                console.log(question.value.answers);
+                question.value.number_of_replies += 1;
+                answer.value.message = "";
             }
         } catch (e) {
             toast.error(e);
         }
     } else {
         toast.warning("Vui lòng nhập câu trả lời của bạn!");
+        answer.value.message = "";
     }
 }
 </script>
@@ -168,7 +173,7 @@ async function answerQuestion() {
 .question-detail .content,
 .question-detail .item-answer {
     text-align: justify;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .question-detail .btn-tab-bar {
@@ -207,5 +212,24 @@ async function answerQuestion() {
 
 .user_reply .btn {
     margin-top: 10px;
+}
+.item-answer{
+    border-bottom: 1px solid var(--main-color);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+.item-answer:first-child{
+    margin-bottom: 0px;
+    border-bottom: none;
+
+}
+.answer-top{
+    margin-bottom: 20px;
+}
+.answer-top img{
+    width: 25px;
+    height: 25px;
+    display: inline;
+    border-radius: 50%;
 }
 </style>
